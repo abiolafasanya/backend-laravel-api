@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsApiController;
+use App\Http\Controllers\OtherNewsController;
+use App\Http\Controllers\RadpidNewsController;
 
 
 /*
@@ -19,8 +21,12 @@ use App\Http\Controllers\NewsApiController;
 
 Route::prefix('v1')->group(function () {
     Route::get('/articles', [NewsApiController::class, 'index'])->name('articles.index');
+    Route::get('/nytimes', [OtherNewsController::class, 'index'])->name('others.index');
+    Route::get('/guardians', [OtherNewsController::class, 'guardians'])->name('others.guardians');
+    Route::get('/test', [OtherNewsController::class, 'getGuardianArticles'])->name('others.test');
     Route::get('/articles/search', [NewsApiController::class, 'search'])->name('articles.search');
     Route::post('/articles/preferences', [NewsApiController::class, 'preferences'])->name('articles.preferences');
+    Route::get('/articles/headlines', [NewsApiController::class, 'headlines'])->name('articles.headlines');
 });
 
 

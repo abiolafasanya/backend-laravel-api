@@ -23,8 +23,17 @@ return [
     ],
 
 
-    'guardians_' => [
+    'guardians' => [
         'key' => env('GUARDIANS_API_KEY'),
     ],
 
+    'rapidnewapi' => [
+        'key' => env('RAPID_API_KEY'),
+        'proxy' => env('RAPID_API_PROXY'),
+        ],
+
+    'unsplash' => [
+        'key' => env('UNSPLASH_API_KEY'),
+        'secret' => env('UNSPLASH_API_SECRET')
+        ],
 ];

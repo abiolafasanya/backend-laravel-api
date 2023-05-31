@@ -12,7 +12,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN php artisan serve
 
 CMD ["apache2-foreground"]
 
+RUN php artisan serve

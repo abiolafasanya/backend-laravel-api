@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  # Laravel app service
+  laravel:
+    image: your-laravel-image-name
+    container_name: Laravel-backend-api
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=database
+      - DB_DATABASE=databasename
+      - DB_USERNAME=dbusername
+      - DB_PASSWORD=dbpassword
+    depends_on:
+      - database
+
+  # React app service
+  reactapp:
+    image: react-news-app
+    container_name: react-app
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    depends_on:
+      - laravel

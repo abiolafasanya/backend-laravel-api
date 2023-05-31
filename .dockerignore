@@ -1,0 +1,12 @@
+.dockerignore
+.env
+vendor/
+node_modules/
+public/storage
+storage/*
+!storage/app/
+!storage/framework/
+!storage/framework/cache
+!storage/framework/sessions
+!storage/framework/views
+!storage/logs

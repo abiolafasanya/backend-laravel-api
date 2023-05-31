@@ -11,7 +11,7 @@ trait FiltersArticlesTrait
     {
         $category = $request->input('category');
         $source = $request->input('source');
-        $publisher = $request->input('publisher');
+        $publisher = $request->input('author');
         
 
         if ($category) {

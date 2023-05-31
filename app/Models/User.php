@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+
+    public function preferences() {
+        return $this->hasMany(UserPreferences::class, 'user_id');
+    }
 }

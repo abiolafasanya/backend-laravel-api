@@ -124,6 +124,8 @@ return [
 
     'key' => env('APP_KEY'),
 
+    'secret' => env('SECRET_KEY'),
+
     'cipher' => 'AES-256-CBC',
 
     /*
@@ -168,6 +170,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //App\Services\NewsService::class,
     ])->toArray(),
 
     /*

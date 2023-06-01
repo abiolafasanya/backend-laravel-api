@@ -23,9 +23,16 @@ class AuthController extends Controller
         $validatedData['password'] = bcrypt($validatedData['password']);
         $user = User::create($validatedData);
         if ($user) {
-            return response()->json(['message' => 'Registration was Successful'], 201);
+            return response()->json([
+                'message' => 'Registration was Successful',
+                'success' => true,
+                ], 201);
         } else {
-            return response()->json(['message' => 'Registration failed'], 400);
+            return response()->json([
+                'message' => 'Registration failed',
+                'success' => false,
+                'error' => 'validation failed'
+                ], 400);
         }
     }
 
@@ -41,12 +48,18 @@ class AuthController extends Controller
             $token = $this->generateToken($user);
 
             return response()->json([
+                'succeed' => true,
+                'message' => 'Authentication successful',
                 'user' => $user,
                 'token' => $token,
             ], 200);
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json([
+            'message' => 'Invalid credentials',
+            'error' => true,
+            'success' => false,
+            ], 401);
     }
 
 

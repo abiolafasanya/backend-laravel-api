@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Backend Laravel API Readme
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This README provides instructions on how to use and set up the Dockerized Laravel app. The app runs in a Docker container, allowing for easy deployment and portability across different environments.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Before you begin, ensure that you have the following prerequisites installed on your system:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Docker: The Docker Engine must be installed and running on your machine. You can download Docker from the official website: [https://www.docker.com/get-started](https://www.docker.com/get-started)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Getting Started
 
-## Learning Laravel
+To start the Dockerized Laravel app, follow these steps:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clone the repository: `git clone https://github.com/dev-harbiola/backend-laravel-api`
+2. Navigate to the project directory: `cd backend-laravel-api`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Building the Docker Image
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+To build the Docker image for the Laravel app, execute the following command in the project directory:
 
-## Laravel Sponsors
+```shell
+docker build -t backend-laravel-api .
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+This command will build the Docker image based on the provided `Dockerfile`. The image will be tagged as `backend-laravel-api`.
 
-### Premium Partners
+### Starting the App
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+To start the app, execute the following command in the project directory:
 
-## Contributing
+```shell
+docker-compose up -d
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This command will start the Docker containers defined in the `docker-compose.yml` file.
 
-## Code of Conduct
+The Docker Compose file defines three services:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. `server` - Laravel app service: This service runs the Laravel app using the `backend-laravel-api` Docker image. It exposes port 8000, allowing access to the app.
+2. `db` - PostgreSQL database service: This service runs the PostgreSQL database using the `postgres:15-alpine` Docker image.
+3. `client` - React News app client: This service runs the React News app client using the `react-news-app_client` Docker image.
 
-## Security Vulnerabilities
+### Accessing the App
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Laravel App: The Laravel app will be accessible at `http://localhost:8000`.
+- PostgreSQL Database: The PostgreSQL database is running as a service and can be accessed using the appropriate configuration in your Laravel app.
+- React News App Client: The React News app client will be accessible according to its configuration.
 
-## License
+Note: Make sure the port 8000 is not already in use on your system.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Stopping the App
+
+To stop the running containers, execute the following command in the project directory:
+
+```shell
+docker-compose down
+```
+
+This will stop and remove the containers.
+
+## Dockerfile
+
+The provided `Dockerfile` is responsible for building the Docker image for the Laravel app. Here's a brief overview of its contents:
+
+1. Base Image: The base image used is `php:8.2-fpm`.
+2. Working Directory: The working directory is set to `/var/www/html`.
+3. Dependencies: The Docker image is updated, and necessary dependencies such as `libzip-dev` and `unzip` are installed.
+4. Application Files: The entire application directory is copied into the Docker image.
+5. Composer: Composer is installed in the Docker image.
+6. Application Dependencies: The application dependencies are installed using `composer install`.
+7. Permissions: Permissions are set for the `storage` and `bootstrap/cache` directories.
+8. Exposed Port: Port 8000 is exposed to allow access to the Laravel app.
+9. Start PHP-FPM: The PHP-FPM process is started as the container's entry point.
+
+Feel free to modify the `Dockerfile` according to your specific Laravel app requirements.
+
+## Troubleshooting
+
+If you encounter any issues or errors while running the Dockerized Laravel app, here are a few suggestions:
+
+1. Ensure that Docker is installed and running correctly on your system.
+2. Verify that the required ports (8000) are not being used by other
